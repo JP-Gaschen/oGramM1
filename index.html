@@ -56,9 +56,9 @@ var audioType = "";
 var gNbSerieOk = 0;
 var audioElement;
 
-var vertStatus = 1;
-var menuBg = '#00ff00';
-var menuFg = '#00bb00';
+//var vertStatus = 1;
+var bgC1 = '#00ff00';
+var bgC2 = '#00bb00';
 
 function wait (ms,pstart) {
   var start = pstart || new Date().getTime();
@@ -315,33 +315,7 @@ function enableBouton(bName,img) {
    boutons.document.getElementById(bName).disabled = true;
  }
  
- function ajusteVert() {
-  var vert1 =  '#00ff00';
-  var vert2 =  '#00bb00';
-  //console.log("ajuste " + parent.vertStatus);
-  if (vertStatus == 1) {
-    menuFg = vert1;
-    menuBg = vert2;
-    $(".vert1",frames[1].document).each(function(){
-      this.style.backgroundColor = vert1; 
-    });
-    $(".vert2",frames[1].document).each(function(){
-      this.style.backgroundColor = vert2; 
-    });
-  } else {
-    menuFg = vert2;
-    menuBg = vert1;
-    $(".vert1",frames[1].document).each(function(){
-      //console.log("vert1 color avant " + this.style.backgroundColor);
-      //console.log("vertId " + this.id);
-      this.style.backgroundColor = vert2;
-      //console.log("vert1 color après " + this.style.backgroundColor);
-    });
-    $(".vert2",frames[1].document).each(function(){
-      this.style.backgroundColor = vert1; 
-    });
-  }
-}
+ 
 
 
 //-->
