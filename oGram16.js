@@ -122,8 +122,8 @@ function init() {
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
   parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
   
-  document.getElementById("Nouveau").style.backgroundColor=parent.vertFg;
-  document.getElementById("Ancien").style.backgroundColor=parent.vertBg;
+  //document.getElementById("Nouveau").style.backgroundColor=parent.bgC1;
+  //document.getElementById("Ancien").style.backgroundColor=parent.bgC2;
   
   
   $('#phrase').keydown(function (e) {
@@ -261,7 +261,7 @@ function rediffusePhrase () {
     if (j > jMot ) phraseApres += "<span>" + mots[j] + "</span>";
   }
   if (phraseAvant != '') phraseAvant += ' ';
-  gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='color:"+parent.menuFg+";'>" + pcd[i][1] +"</span>" + phraseApres;
+  gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='color:"+parent.bgC1+";'>" + pcd[i][1] +"</span>" + phraseApres;
   //gPhrase = phraseAvant + "<span id='nnn'>" + pcd[i][1] +"</span>" + phraseApres;
   //console.log(phraseTxt);
   //console.log(gPhrase);
@@ -269,7 +269,7 @@ function rediffusePhrase () {
   
   //if (pcd[i][4] != undefined) phraseTxt += " " + pcd[i][4];
 
-//console.log(phraseTxt);
+  console.log(phraseTxt);
   document.getElementById('phrase').innerHTML = phraseTxt;
 
   
@@ -287,7 +287,7 @@ function rediffusePhrase () {
   nouv.style.left = '' + leftOffset + 'px';
   nouv.innerHTML = pcd[i][1].replace(/-/,"");
   nouv.style.visibility = 'hidden';
-  nouv.style.backgroundColor=parent.menuFg;
+  nouv.style.backgroundColor=parent.bgC1;
   nouv.style.lineHeight = '34px';
   
 
@@ -296,7 +296,7 @@ function rediffusePhrase () {
   anc.innerHTML = mots[pcd[i][2]-1].replace(/-/,"");
   if (mots[pcd[i][2]-1] == "s'") anc.innerHTML += " " + mots[pcd[i][2]];
   anc.style.visibility = 'hidden';
-  anc.style.backgroundColor=parent.menuFg; // essai
+  anc.style.backgroundColor=parent.bgC1; // essai
   if (i == 0 || pcd[i-1].length == 1) setTimeout(function() {anime()},3000);
   else setTimeout(function() {anime()},1000);
 }
@@ -307,7 +307,7 @@ function anime() {
   var i = parent.ranData(pc.iData);
   
   var mot = document.getElementById('s'+(pcd[i][2]-1));
-  mot.style.color=parent.menuFg;
+  mot.style.color=parent.bgC1;
   if (mot.innerHTML.length > pcd[i][1].length) {
     mot.innerHTML= pcd[i][1] + mot.innerHTML.substring(pcd[i][1].length);
   //console.log(mot.innerHTML);
@@ -335,7 +335,7 @@ function move() {
   anc.style.top = '' + (306 + gNmove) + 'px';
   gNmove += 1;
   if (gNmove == 40) ajuste();
-  if (gNmove == 120) nouv.style.backgroundColor = parent.menuBg;
+  if (gNmove == 120) nouv.style.backgroundColor = parent.bgC2;
   if (gNmove > 140) {
     window.clearInterval(gIntervalId);
     //nouv.style.visibility = 'hidden';
@@ -343,7 +343,7 @@ function move() {
     gMot.style.color = '#000000';
     document.getElementById("Nouveau").innerHTML = pcd[parent.ranData(pc.iData)][1];
     //console.log("'" + document.getElementById("Nouveau").innerHTML + "'");
-    document.getElementById("Nouveau").style.backgroundColor=parent.menuBg;
+    document.getElementById("Nouveau").style.backgroundColor=parent.bgC2;
     //document.getElementById("Nouveau").style.visibility='hidden';
   //console.log(document.getElementById('phrase').innerHTML);
   //console.log($('#phrase').text());
@@ -486,7 +486,7 @@ function startDemo(){
   var mots =$('#phrase').text().split(' ');
   var phraseTxt = '';
   for (var j=0; j<mots.length; j++)  {
-    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:" + parent.menuFg + ";' >"+ mots[j]+ "</span>";
+    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:" + parent.bgC1 + ";' >"+ mots[j]+ "</span>";
     else phraseTxt += "<span id='s"+j+"' >"+ mots[j]+ "</span>";
     if (j < mots.length - 1) phraseTxt += ' ';
   }

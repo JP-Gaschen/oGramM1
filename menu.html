@@ -18,7 +18,7 @@
 <script type="text/javascript">
 
 $(window).load( function () {
- parent.ajusteVert();
+  //parent.ajusteVert();
  ////console.log("menu ready");
  });
  
@@ -157,7 +157,7 @@ $(document).ready( function () {
     parent.ba.activity = 0;
     parent.boutons.menuLevel = 0;
     parent.og.document.getElementById("titre").innerHTML = 'Module 1: Le groupe nominal (GN)';
-    var txt = "<div class='vert1' style='position:absolute; left:50px; font-size:31px; width:880px;'>";
+    var txt = "<div class='bgC1' style='position:absolute; left:50px; font-size:31px; width:880px;'>";
     //console.log(txt);
     var tPos;
     for (var i=1; i<activites.length; i++)  {
@@ -166,12 +166,12 @@ $(document).ready( function () {
 
 
       //txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00;' onClick='page2("+i+")'>"+ activites[i][0]+ "</a>";
-      txt += "<a href='#' id='m"+i+"' class='vert1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; text-align:center; width:30px; padding-left:1px; height:50px;' onClick='page2("+i+")'>"+ i +  "</a>";
-      txt += "<a href='#' id='n"+i+"' class='vert1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; width:850px; left:30px; height:50px;' onClick='page2("+i+")'> - " + activites[i][0]+ "</a>";
+      txt += "<a href='#' id='m"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; text-align:center; width:30px; padding-left:1px; height:50px;' onClick='page2("+i+")'>"+ i +  "</a>";
+      txt += "<a href='#' id='n"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; width:850px; left:30px; height:50px;' onClick='page2("+i+")'> - " + activites[i][0]+ "</a>";
     }
     //console.log(txt);
     document.getElementById('zm').innerHTML = txt + "</div>";
-    parent.ajusteVert();
+    //parent.ajusteVert();
   }
 
   
@@ -180,21 +180,20 @@ $(document).ready( function () {
 
 } ) ;
 
-function menuClick(event) {
+//function menuClick(event) {
   //console.log("menu click level " + parent.boutons.menuLevel);
-  if (parent.boutons.menuLevel > 0) return;
+  //if (parent.boutons.menuLevel > 0) return;
   //console.log("activity " + parent.ba.activity);
   //console.log("level " + parent.boutons.menuLevel);
   //console.log(event.target.id);
-  parent.vertStatus = 3 - parent.vertStatus;
+  //parent.vertStatus = 3 - parent.vertStatus;
   //console.log("click in menu " + parent.vertStatus);
-  parent.ajusteVert();
-}
+  //parent.ajusteVert();
+//}
 
 function page2(activity) {
-  //console.log("page2 pour " + activity + " bg " + parent.menuBg + " fg " + parent.menuFg);
   parent.ba.document.getElementById("Binformation").style.visibility = 'hidden';
-  parent.ajusteVert();
+  //parent.ajusteVert();
   parent.boutons.menuLevel = 1;
   parent.ba.activity = activity;
   parent.og.document.getElementById("titre").innerHTML =  'GN ' + activity.toString() + ' - ' + activites[activity][0];
@@ -206,9 +205,9 @@ function page2(activity) {
   parent.disableBouton('Breecouter','ecouterD.gif');
 
   
-  var txt = "<div class='vert1' style='position:absolute; left:20px; font-size:32px; width:940px'>";
+  var txt = "<div class='bgC1' style='position:absolute; left:20px; font-size:32px; width:940px'>";
   if (activites[activity][1]) {
-    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000; background-color : "+parent.menuFg+";border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
+    txt += "<a href='#' class='bgC1' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
     //console.log(txt);
   }
   var tPos;
@@ -235,20 +234,20 @@ function page2(activity) {
           lPos = (940 - nSeries*45)/2 + (i-1 -nSeries/2)*90;
         }
       }
-      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : "+parent.menuFg+"; text-align: center' onClick='"+series[activity][k][0]+";'>"+txti+"</a>";
+      txt += "<a href='#' class='bgC1' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+txti+"</a>";
     }
   } else {
     for (var i=1; i<=nSeries; i++)  {
       var k = i + activites[activity][1];
       tPos = 255;
       lPos = 170 + (i-1)*400;
-      txt += "<a href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; background-color : "+parent.menuFg+"; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+      txt += "<a href='#' class='bgC1' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
     }
   }
   
   if (activites[activity][3]) {
     var k = activites[activity][1] + activites[activity][2] + 1;
-    txt += "<a href='#' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000; background-color : "+parent.menuBg+";border-style : solid; border-width : 1px; border-color: #000000; background-color : "+parent.menuFg+"; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    txt += "<a href='#' class='bgC1' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
     //console.log(txt);
   }
   txt += "</div>";
@@ -287,7 +286,7 @@ function startDemo(l,m,n,k,g) {
   parent.disableBouton('Breecouter','ecouterD.gif');
 
   $(parent.corpus.contentDocument).ready(function() {
-    parent.ajusteVert();
+    //parent.ajusteVert();
     //console.log("corpus is ready in menu demo");
     //parent.og.location = "startPage" + l + ".html?version=46";
   //parent.og.location = "frame" +  l + m + ".html?version=46";
@@ -296,7 +295,7 @@ function startDemo(l,m,n,k,g) {
   
 }
 function startSerie(l,m,n,k,g) {
-  parent.ajusteVert();
+  //parent.ajusteVert();
   parent.boutons.menuLevel = 2;
   var enCoursPhase = [
     [],
@@ -352,7 +351,7 @@ function startSerie(l,m,n,k,g) {
 
 function displayResume(l,m) {
   parent.boutons.menuLevel = 2;
-  parent.ajusteVert();
+  //parent.ajusteVert();
   //console.log("displayResume");
   //parent.boutons.location = "boutons.html?version=46";
   parent.ba.program = l;
@@ -377,7 +376,7 @@ function init() {
 </head>
 <body >
 <div class = "bordnoir">
-<div class = "bordvert vert1">
+<div class = "bordvert bgC1">
 
 <div id='verticalContainerG'>
 <div Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
@@ -390,7 +389,7 @@ function init() {
  <div Id ="titre" style="font-size:24px;  text-align:center;"></div>
 </div>
 
-<div class = "zoneCentrale vert2" id="zm"></div>
+<div class = "zoneCentrale bgC2" id="zm"></div>
 
 
 

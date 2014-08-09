@@ -24,8 +24,8 @@ function init() {
 
 function pageResultats (n1, n2) {
   
-  var txt = "<div class='vert2' style='position:absolute; left:0px; width:980px; height:600px;'>";
-  txt += "<div class='vert1' style='position:absolute; left:50px; top:200px;width:880px; height:200px;'>";
+  var txt = "<div class='bgC2' style='position:absolute; left:0px; width:980px; height:600px;'>";
+  txt += "<div class='bgC1' style='position:absolute; left:50px; top:200px;width:880px; height:200px;'>";
   txt += "<div style='position:absolute;font-size:32px; top:20px;width:880px; text-align:center;'>Vous avez réussi " + n1 + " exercices sur " + n2 + " : " + n1 + "/" + n2 + "</div>";
   txt += "<div style='position:absolute;font-size:32px; top:100px;width:880px; text-align:center;'>" + n1 + "/" + n2 + " correspond à " + Math.round(100*n1/n2) + " %</div>";
   
@@ -37,7 +37,7 @@ function pageResultats (n1, n2) {
   }
 
   parent.og.document.getElementById("bordBlanc").innerHTML = txt + '</div>';
-  parent.ajusteVert();
+  //parent.ajusteVert();
 }
 
 function showMenu() {
