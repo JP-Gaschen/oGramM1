@@ -31,7 +31,15 @@ function valider(n) {
     gNbRejoues = 0;
     
     setTimeout(auSuivant,200);  // à cause de safari...
-  } else gNbErrors += 1;
+  } else {
+    gNbRate += 1;
+    gNbPhrasesOk = 0;
+    parent.ba.document.getElementById(id).style.backgroundColor = "#ff0000";
+    gNbErrors = 0;
+    gNbRejoues = 0;
+    
+    setTimeout(auSuivant,200);  // à cause de safari...
+  } //gNbErrors += 1;
 }
 
 function rejouer() {

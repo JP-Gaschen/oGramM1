@@ -117,7 +117,7 @@ function init() {
 
   
   gChars = [[""]];
-  gLeft = 74;
+  gLeft = 70;
   
   parent.og.document.getElementById("titre").innerHTML =  parent.ba.titre;
   parent.og.document.getElementById("module").innerHTML =  parent.ba.module;
@@ -127,11 +127,34 @@ function init() {
   
   
   $('#phrase').keydown(function (e) {
-    var keyCode = e.keyCode || e.which;
-    //console.log(keyCode);
+    var keyCode = e.which;
+    //console.log('keyCode down ' + keyCode + ' shift ' + e.shiftKey);
+    //console.log( $(this).getCursorPosition());
+
+    var charStr = String.fromCharCode(keyCode);
+    //console.log("Letter typed "+ charStr);
+    if (/[a-z]/i.test(charStr) || keyCode == 0 || keyCode == 4|| keyCode == 16 || keyCode == 52 || keyCode == 186 || keyCode == 219 || keyCode == 220 || keyCode == 221 || keyCode == 222) {
+      if (/[a-z]/i.test(charStr) && e.shiftKey) {
+        e.preventDefault();
+        return false;
+      }
+       //console.log("Letter typed "+ charStr);
+    } else {
+      if (keyCode == 8 || keyCode == 46 || keyCode == 13 || keyCode == 32 || keyCode == 54 || keyCode == 37 || keyCode == 39 | keyCode == 16) {
+        //console.log("key typed " + keyCode);
+      } else {
+        e.preventDefault();
+        return false;
+      }
+    }
+    
+    
+
     var el = document.getElementById("phrase");
+    //console.log(el.innerHTML);
     var range = window.getSelection().getRangeAt(0);
     var pos = getCharacterOffsetWithin(range, el);
+    //console.log('pos ' + pos);
     var outerLen = document.getElementById('nnn').outerHTML.length;
     var innerLen = document.getElementById('nnn').innerHTML.length;
     //console.log("spanlen " + innerLen + " " + outerLen);
@@ -140,19 +163,32 @@ function init() {
     }
     //var currentPhrase = document.getElementById("phrase").innerHTML;
     currentPhrase = $("#phrase").text();
+    //console.log(currentPhrase);
+    var nouvLen = pcd[pc.iData][1].length;
+    if (currentPhrase.substring(pos-nouvLen,pos) == pcd[pc.iData][1] && keyCode == 8 ) {
+      //console.log("not deleting nouveau");
+      e.preventDefault();
+      return false;
+    }
+     
     var c2 = currentPhrase.charCodeAt(pos-2);
     var c1 = currentPhrase.charCodeAt(pos-1);
     var c0 = currentPhrase.charCodeAt(pos);
     var char2 = currentPhrase.charAt(pos-2);
     var char1 = currentPhrase.charAt(pos-1);
     var char0 = currentPhrase.charAt(pos);
-    //console.log(currentPhrase);
+    
     //console.log(pos + " c0 " + c0 + " " + char0 + "   c1 " + c1 + " " + char1 + "   c2 " +  c2 + " " + char2);
 
     // backSpace 8 or delete 46
     // 38 est le code pour &
     if ((keyCode == 8 && (c1 == 32 || c1 == 160)) || (keyCode == 46 && (c0 == 32 || c0 == 160))) {
       //console.log("not deleting a space");
+      e.preventDefault();
+      return false;
+    }
+     if ((keyCode == 8 && char1 == ',') || (keyCode == 46 && char0 == ',')) {
+      //console.log("not deleting a coma");
       e.preventDefault();
       return false;
     }
@@ -195,13 +231,17 @@ function init() {
     }
   });
   $('#phrase').keyup(function (e) {
-    //console.log(document.getElementById('phrase').innerHTML);
-    var sp =  document.getElementById('nnn');
-    if (sp) {
-      var left = gLeft + sp.offsetLeft;
+    //var sp =  document.getElementById('nnn');
+    //if (sp) {
+    //  var left = gLeft + sp.offsetLeft;
       //document.getElementById('Nouveau').style.color="#00ff00";
-      document.getElementById('Nouveau').style.left = "" + left + "px";
-    }
+      //document.getElementById('Nouveau').style.left = "" + left + "px";
+    //}
+    var currentPhrase = $("#phrase").text();
+    var len = parent.txtSize2(currentPhrase,30);
+    //console.log('current size ' + len);
+    if (len > 860) document.getElementById("phraseDiv").style.height='120px';
+    if (len < 861) document.getElementById("phraseDiv").style.height='70px';
   });
   
   if (parent.isDemo){
@@ -209,7 +249,7 @@ function init() {
     parent.enableBouton('displayMenu','menuC.gif');
     //for (var i=0; i<6; i++) parent.gPhraseOrder[i] = i;
     showPointer();
-    window.setTimeout(startDemo,4000);
+    window.setTimeout(startDemo,4500);  //4500
   } else {
     
     var serie = parent.ba.serie;
@@ -241,7 +281,9 @@ function rediffusePhrase () {
   var i = parent.ranData(pc.iData);
   parent.og.gIgnoreClick = false;
   var pcdi = pcd[i][0].replace(/'/g ,"' ").replace(/-/,"- ").replace(/,/," ,");
+//console.log(pcdi);
   var mots = pcdi.split(' ');
+//console.log(mots);
   //console.log("pcdi " + pcdi.length);
   //console.log(document.getElementById('textinput').style.width);
   var phraseTxt = '';
@@ -254,14 +296,19 @@ function rediffusePhrase () {
      if (mots[j] != ',') mots[j] = ' ' + mots[j];
      //console.log(mots[j]);
   }
+  //mots[0]= mots[0] + " ";
   for (var j=0; j<mots.length; j++)  {
-    phraseTxt += "<span id='s"+j+"' >"+ mots[j]+ "</span>";
+    phraseTxt += "<span class='unselectable' id='s"+j+"' >"+ mots[j]+ "</span>";
     //if (j < mots.length - 1 && mots[j+1] != ',') phraseTxt += ' ';
     if (j < jMot) phraseAvant += "<span>" + mots[j] + "</span>";
     if (j > jMot ) phraseApres += "<span>" + mots[j] + "</span>";
+    
   }
   if (phraseAvant != '') phraseAvant += ' ';
-  gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='color:"+parent.bgC1+";'>" + pcd[i][1] +"</span>" + phraseApres;
+  //console.log(phraseAvant);
+  //console.log(phraseApres);
+  //gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='color:"+parent.bgC1+";'>" + pcd[i][1] +"</span>" + phraseApres;
+  gPhrase = phraseAvant + "<span id='nnn' contentEditable='false' style='background-color:"+parent.bgC2+";'>" + pcd[i][1] +"</span>" + phraseApres;
   //gPhrase = phraseAvant + "<span id='nnn'>" + pcd[i][1] +"</span>" + phraseApres;
   //console.log(phraseTxt);
   //console.log(gPhrase);
@@ -269,10 +316,9 @@ function rediffusePhrase () {
   
   //if (pcd[i][4] != undefined) phraseTxt += " " + pcd[i][4];
 
-  console.log(phraseTxt);
+  //console.log(phraseTxt);
+   
   document.getElementById('phrase').innerHTML = phraseTxt;
-
-  
   var mot = document.getElementById('s'+(pcd[i][2]-1));
   mot.style.contentEditable = false;
   gMot = mot;
@@ -307,7 +353,7 @@ function anime() {
   var i = parent.ranData(pc.iData);
   
   var mot = document.getElementById('s'+(pcd[i][2]-1));
-  mot.style.color=parent.bgC1;
+  mot.style.color=parent.bgC1;  // transparent
   if (mot.innerHTML.length > pcd[i][1].length) {
     mot.innerHTML= pcd[i][1] + mot.innerHTML.substring(pcd[i][1].length);
   //console.log(mot.innerHTML);
@@ -325,6 +371,8 @@ function anime() {
 
 
 function move() {
+  if(gNmove > 141) return;
+//console.log("move " + gNmove);
   var pc = parent.corpus;
   var pcd = pc.corData;
   var nouv = document.getElementById('Nouveau');
@@ -343,13 +391,19 @@ function move() {
     gMot.style.color = '#000000';
     document.getElementById("Nouveau").innerHTML = pcd[parent.ranData(pc.iData)][1];
     //console.log("'" + document.getElementById("Nouveau").innerHTML + "'");
-    document.getElementById("Nouveau").style.backgroundColor=parent.bgC2;
-    //document.getElementById("Nouveau").style.visibility='hidden';
+    document.getElementById("Nouveau").style.backgroundColor= '#ff0000'; //parent.bgC2;
+    document.getElementById("Nouveau").style.visibility='hidden';
   //console.log(document.getElementById('phrase').innerHTML);
   //console.log($('#phrase').text());
     //document.getElementById('phrase').innerHTML = $('#phrase').text();
     //console.log(gPhrase);
+    //if (parent.isDemo) 
     document.getElementById('phrase').innerHTML = gPhrase;
+    var currentPhrase = $("#phrase").text();
+    var len = parent.txtSize2(currentPhrase,30);
+    //console.log('current size ' + len);
+    if (len > 860) document.getElementById("phraseDiv").style.height='120px';
+    if (len < 861) document.getElementById("phraseDiv").style.height='70px';
   }
 }
 
@@ -369,6 +423,7 @@ function ajuste () {
         (function(s) {
             return function() {
                 gMot.innerHTML = s;
+              //console.log('|'+gMot.innerHTML+'|');
             }
         })(txt.substring(0,i)), to);
 
@@ -401,7 +456,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=46';
+      parent.og.location = 'menu.html?version=47';
       
     }
  
@@ -444,6 +499,7 @@ function auSuivant() {
       //console.log("auSuivant 4");  // fin de phase 1
       if (parent.isDemo) {
         hidePointer(); // test demo automatique
+        setTimeout(parent.boutons.showMenu,4000);
         
       } else {
         var nEx = pc.corData.length - 4;
@@ -453,7 +509,7 @@ function auSuivant() {
         parent.boutons.pageResultats(nOk, nEx);
         //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
-      setTimeout(parent.boutons.showMenu,4000);
+      //setTimeout(parent.boutons.showMenu,4000);
         
 
   } 
@@ -483,25 +539,31 @@ function startDemo(){
   var pcd = pc.corData;
   //alert(pcd);
   var justesPoint = pcd[pc.iData+1][0];
+//console.log(document.getElementById('phrase').innerHTML);
   var mots =$('#phrase').text().split(' ');
+//console.log(mots);
   var phraseTxt = '';
   for (var j=0; j<mots.length; j++)  {
-    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:" + parent.bgC1 + ";' >"+ mots[j]+ "</span>";
+    if (j == pcd[pc.iData][2] - 1) phraseTxt += "<span id='s"+j+"' style='background-color:" + parent.bgC2 + ";' >"+ mots[j]+ "</span>";
     else phraseTxt += "<span id='s"+j+"' >"+ mots[j]+ "</span>";
     if (j < mots.length - 1) phraseTxt += ' ';
   }
   //gsavedPhrase = document.getElementById('phrase').innerHTML;
+//console.log(phraseTxt);
+  document.getElementById("Ancien").style.visibility = 'hidden';
+  document.getElementById("Nouveau").style.visibility = 'hidden';
   document.getElementById('phrase').innerHTML = phraseTxt;
       
   
   montreNouveau(0);
 }
 function montreNouveau(n) {
-  //console.log('montreNouveau');
-  document.getElementById("Nouveau").style.visibility = 'hidden';
+//console.log('montreNouveau ' + n);
+//console.log(document.getElementById("Nouveau").style.visibility);
   var pc = top.frames[0];
   var pcd = pc.corData;
   var mots =$('#phrase').text().split(' ');
+//console.log(mots);
   var justesPoint = pcd[pc.iData+1][0];
   justes = justesPoint.split(' ');
   var k = 0;
@@ -513,12 +575,12 @@ function montreNouveau(n) {
   //console.log("commun " + i + "  " + justes[n].substring(0,i-1));
     for (var j = mots[n].length; j > i-1; j--) {
       gChars[n][k] = mots[n].substring(0,j-1);
-    //console.log(gChars[n][k]);
+      //console.log(gChars[n][k]);
       k += 1;
     }
     for (var j= i; j<justes[n].length+1; j++ ) {
       gChars[n][k] = justes[n].substring(0,j);
-    //console.log(gChars[k]);
+      //console.log(gChars[n][k]);
       k += 1;
     }
   //console.log(gChars);
@@ -526,7 +588,7 @@ function montreNouveau(n) {
     var cmd = "remplace(" + n + ",0)";
     if (obj) cligne(obj,3,cmd);
     if (n+1 < mots.length) setTimeout(function() {montreNouveau(n+1);},3000);
-    else setTimeout(parent.boutons.showMenu,4000);
+    else setTimeout(parent.boutons.showMenu,2000);
   }
   else if (n+1 < mots.length) montreNouveau(n+1);
   else  setTimeout(parent.boutons.showMenu,2000);
@@ -535,7 +597,8 @@ function montreNouveau(n) {
 function remplace (n,k) {
   var pc = top.frames[0];
   var pcd = pc.corData;
-//console.log("remplace " + n + " " + k);
+  //console.log("remplace " + n + " " + k + " " + gChars[n][k]);
+  //console.log( document.getElementById('phrase').innerHTML);
   var obj =document.getElementById('s' + n);
   obj.innerHTML = gChars[n][k];
   var sp =  document.getElementById('s' +  (pcd[pc.iData][2] - 1));
@@ -546,6 +609,7 @@ function remplace (n,k) {
     }
   if (k+1 < gChars[n].length) setTimeout(function () {remplace(n,k+1);},200);
 }
+
 
 
 

@@ -1,6 +1,6 @@
 
 function valider() {
-  //console.log("valider 13");
+  //console.log("valider 15");
 
   if (parent.og.gIgnoreClick && !parent.isDemo) {return;}
   var pc = parent.corpus;
@@ -30,6 +30,7 @@ function valider() {
     gNbErrors = 0;
     gNbRejoues = 0;
     gNbMotsKo = 0;
+    gIgnoreClick = true;
     setTimeout(auSuivant,200);  // à cause de safari...
   
   }

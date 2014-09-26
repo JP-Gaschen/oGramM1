@@ -33,10 +33,11 @@ function valider(n) {
       parent.ba.document.getElementById(id2).style.backgroundColor = "#ff0000";
     }
 
-    
+    parent.og.gIgnoreClick = true;
     setTimeout(auSuivant,200);  // à cause de safari...
   } else {
     document.getElementById(parent.og.motReecrit).innerHTML = "&nbsp;";
+    document.getElementById(parent.og.motReecrit).focus();
     gNbErrors += 1;
   }
 }

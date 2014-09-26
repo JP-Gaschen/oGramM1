@@ -4,7 +4,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="generator" content="PSPad editor, www.pspad.com">
   <title></title>
+   
+  
+   
   <script type="text/javascript" src="jquery.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="oGramM1.css">
   
   <style type="text/css"> 
   
@@ -62,7 +67,7 @@ function hideCarres () {
     $(this).css("visibility","hidden");
     $(this).css("backgroundColor","#ffffff");
   });
-  
+  parent.ba.document.getElementById("Binformation").style.visibility = 'hidden';
 }
 function showCarres (n1,n2) {
   //console.log("showCarres " + n1 + " , " + n2);
@@ -89,7 +94,11 @@ function showCarres (n1,n2) {
 }
 
 function information () {
-  console.log("Information tbi");
+  //console.log("Information tbi");
+  var txt = "<div>";
+  txt += "<a href='Releve resultats mod 1-2.pdf' style='position: absolute; top: 50px; left: 50px; font-size:30px;' target='_blank'>Relevé de résultats</a>";
+  parent.og.document.getElementById('zm').innerHTML = txt + "</div>";
+  parent.enableBouton('displayMenu','menuC.gif');
 }
   </script>
   </head>
@@ -136,6 +145,6 @@ function information () {
   <div class="exercice" id = "c38"></div>
   <div class="exercice" id = "c39"></div>
   <div class="exercice" id = "c40"></div>
-  <input type='image' src='informationC.gif' width=60 height=60 alt='Information' title='Information' Id="Binformation" style="position:absolute; top:590px; right:20px; z-index:20;"  onclick = "javascript:information();"  />
+  <input type='image' src='informationC.gif' width=60 height=60 alt='Information' title='Information' Id="Binformation" style="position:absolute; top:600px; right:20px; z-index:20; visibility:hidden;"  onclick = "javascript:information();"  />
 </body>
 </html>

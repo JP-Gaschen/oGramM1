@@ -94,7 +94,7 @@ function init() {
      var mot = document.getElementById(id);
 
      var lefti = 50 + 220 * (i % 4);
-     var topi = 130 + 50 * parseInt(i/4);
+     var topi = 52 + 76 * parseInt(i/4);
      mot.style.left = "" + lefti+"px";
      mot.style.top = "" + topi+"px";
      mot.style.color = "#000000";
@@ -162,6 +162,7 @@ function init() {
 
 }
 function selectMot(id,iMot,txt) {
+  if (!parent.boutons.document.getElementById('Bvalider').disabled) return;
   var pc = parent.corpus;
   var pcd = pc.corData;
   //console.log("selectMot " + iMot + ' ' + txt);
@@ -197,7 +198,7 @@ function selectMot(id,iMot,txt) {
         document.getElementById('phrase').innerHTML = phraseTxt;
         selectedMasculin = 0;
         document.getElementById(id).style.color = '#777777';
-        
+        parent.enableBouton('Bvalider','validerC.gif');
   
         setTimeout(efface,1200);
       } else {
@@ -213,10 +214,11 @@ function selectMot(id,iMot,txt) {
 
 
 function efface(){
+  parent.og.gIgnoreClick = false;
   var ind = Date.now() % 4;
   var spId = "sp" + 2 * ind;
   //console.log(spId);
-  parent.enableBouton('Bvalider','validerC.gif');
+  //parent.enableBouton('Bvalider','validerC.gif');
  
     motAttendu = document.getElementById(spId).innerHTML;
     motReecrit = spId;
@@ -236,7 +238,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=46';
+      parent.og.location = 'menu.html?version=47';
       
     }
  
@@ -277,6 +279,7 @@ function auSuivant() {
       //console.log("auSuivant 4");  // fin de phase 1
       if (parent.isDemo) {
         hidePointer(); // test demo automatique
+        setTimeout(parent.boutons.showMenu,4000);
         
       } else {
         var nEx = 2*pc.corData.length;
@@ -285,7 +288,7 @@ function auSuivant() {
         parent.boutons.pageResultats(nOk, nEx);
         //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
-      setTimeout(parent.boutons.showMenu,4000);
+      //setTimeout(parent.boutons.showMenu,4000);
         
 
   } 

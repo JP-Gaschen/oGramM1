@@ -46,9 +46,8 @@ function showMenu() {
   //parent.ba.location.reload();
 
   parent.ba.hideCarres();
-  parent.ba.document.getElementById("Binformation").style.visibility = 'visible';
 
-  parent.og.location = 'menu.html?version=46';
+  parent.og.location = 'menu.html?version=47';
 }
 
 function displayResume() {

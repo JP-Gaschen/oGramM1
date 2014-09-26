@@ -100,13 +100,13 @@ function init() {
     frames[5].document.getElementById('Sp').innerHTML = "des";
        
     //animate1 (id,widthF,leftD,widthD,duration)
-    animate1("p",120,133,124,3000);
-    animate1("s",120,10,123,3000);
+    animate1("p",127,140,131,3000);
+    animate1("s",127,10,130,3000);
 
-    animate3("fp",120,630,124,3000);
-    animate3("mp",120,509,121,3000);
-    animate3("fs",120,388,121,3000);
-    animate3("ms",120,265,123,3000);
+    animate3("fp",120,642,124,3000);
+    animate3("mp",120,521,121,3000);
+    animate3("fs",120,400,121,3000);
+    animate3("ms",120,277,123,3000);
   
   
     //frames[0].registerClick2 ("#00ff00");
@@ -279,7 +279,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=46';
+      parent.og.location = 'menu.html?version=47';
      
     }
  
@@ -385,8 +385,8 @@ function auSuivant() {
     var nOk = nEx - gNbRate;
     parent.boutons.pageResultats(nOk, nEx);
     //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-    if (parent.ba.serie == 6) parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=46";
-    else setTimeout(parent.boutons.showMenu,4000);
+    //if (parent.ba.serie == 6) parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=47";
+    //else setTimeout(parent.boutons.showMenu,4000);
   } else {
       ////console.log("auSuivant 4");  // fin de phase 1
       if (parent.isDemo) {
@@ -427,7 +427,7 @@ function addSuffix(m,n) {
   frames[m+7].document.getElementById('Sp').innerHTML = newTxt;
   var newTxt = "";
   for (var i=0; i<t.length - 1; i++) {
-    var topPos = 33*i;
+    var topPos = 2+ 33*i;
     if (suf == "") {
       pref = t[i];
       tSuf="&nbsp";
@@ -443,7 +443,7 @@ function addSuffix(m,n) {
 
     var txt2 = "<span Id='" + IdS + "' class='suffix' style='" + gSuffixStyle + "left:"+(w+3)+"px;'>" + tSuf + "</span>";
     
-    newTxt += "<div style='height:33px;position:absolute;top:"+topPos+"px;'>" + txt1 + txt2 + "</div>";
+    newTxt += "<div style='height:31px;position:absolute;top:"+topPos+"px;'>" + txt1 + txt2 + "</div>";
   } 
 
   ////console.log(newTxt);
@@ -524,7 +524,7 @@ function collapse(m,n) {
   
   for (var i=0; i<t.length - 1 - n; i++) {
   
-    var tPos = 33*i;
+    var tPos = 2 + 33*i;
     Id = "Li"+(i+1);
 
     if (suf == "") {
@@ -535,7 +535,7 @@ function collapse(m,n) {
      var txt = "<span id='" + m + "' class='suffix' style='" + gSuffixStyle + "left:"+(gLeftPos)+"px;'>" + suf +"</span>";
     //tbl = "<span  style='position:absolute;left:"+(gLeftPos)+"px;text-align:center;' class='suffix'>" + tSuf +"</span>";
     
-    newTxt += "<div Id='" + Id + "' style='position:absolute;height:33px;top:" + tPos + "px;'>" + txt + "</div>";
+    newTxt += "<div Id='" + Id + "' style='position:absolute;height:31px;top:" + tPos + "px;'>" + txt + "</div>";
     
     
   }
@@ -551,7 +551,7 @@ function collapse(m,n) {
       var nEx = pc.corData.length - pc.nPhase1;
       var nOk = nEx - gNbRate;
       parent.boutons.pageResultats(nOk, nEx);
-      setTimeout(parent.boutons.showMenu,4000);
+      //setTimeout(parent.boutons.showMenu,4000);
     }
   
 
@@ -564,7 +564,7 @@ function montreAbstractions01(m) {
 
   for (var i=1; i < spSuffix01.length; i++) {
    //alert("i="+i + " " + t[i]);
-   var tPos = 1 + (i-1)* 33;
+   var tPos = 2 + (i-1)* 33;
    suf = spSuffix01[i][m];
    if (suf == "") {suf="&nbsp"}
    
@@ -598,7 +598,7 @@ function montreAbstractions03(m,n) {
   var newTxt = "<div class='abstractions' style='visibility:hidden;margin-left:" + gLeftPos + "px; margin-right:auto;'>"
   for (var i=1; i <= n; i++) {
    //alert("i="+i + " " + t[i]);
-   var tPos = 1 + 33*(i-1);
+   var tPos = 2 + 33*(i-1);
    suf = spmfSuffix03[i][m];
    if (suf == "") {suf="&nbsp"}
    
@@ -608,7 +608,7 @@ function montreAbstractions03(m,n) {
     
   }
 
-  var tPos = 1 + n * 33;
+  var tPos = 2 + n * 33;
   newTxt += "</div><div Id='Sub' style='position:absolute;top:"+tPos+"px;'></div>" ;
   ////console.log(newTxt);
   gAbstractions03[m] = newTxt;
@@ -658,8 +658,8 @@ function process_click_global(w){
 
       var txt = txt5.split(" ")[j];
       //alert (txt);
-      var tbl = "<span style='line-height:22px;font-size:22px;height:33px'>" + txt + "</span>";
-      var newTxt = "<div style='height:33px;'>"  + tbl + "</div>";
+      var tbl = "<span unselectable='on' class='unselectable='on' style='line-height:24px;font-size:22px;height:31px'>" + txt + "</span>";
+      var newTxt = "<div style='height:31px;'>"  + tbl + "</div>";
       document.getElementById('phrase').innerHTML += txt + " ";
       if (gPhase == 1) {
         ////console.log(" " + exp1 + " " + exp2 + " " + txt);

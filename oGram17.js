@@ -108,7 +108,17 @@ function rediffusePhrase() {
   //console.log(pcd[pc.iData]);
   
   gIgnoreClick = false;
+  
   document.getElementById('phrase').innerHTML=pcd[pc.iData][0];
+  var currentPhrase = $("#phrase").text();
+    
+  var len = parent.txtSize2(currentPhrase,30);
+  
+  //console.log('current size ' + len);
+  if (len > 858) document.getElementById("phraseDiv").style.height='120px';
+  else document.getElementById("phraseDiv").style.height='70px';
+  
+  
   var nbMots = pcd[pc.iData][0].split(' ').length;
   var t = 800 + 300*nbMots;
  //console.log(nbMots);
@@ -131,7 +141,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=46';
+      parent.og.location = 'menu.html?version=47';
       
     }
  
@@ -170,6 +180,7 @@ function auSuivant() {
       //console.log("auSuivant 4");  // fin de phase 1
       if (parent.isDemo) {
         hidePointer(); // test demo automatique
+        setTimeout(parent.boutons.showMenu,4000);
         
       } else {
         var nEx = pc.corData.length;
@@ -177,7 +188,7 @@ function auSuivant() {
         parent.boutons.pageResultats(nOk, nEx);
         //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
-      setTimeout(parent.boutons.showMenu,4000);
+      //setTimeout(parent.boutons.showMenu,4000);
         
 
   } 

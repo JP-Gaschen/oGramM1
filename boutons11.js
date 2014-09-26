@@ -26,6 +26,7 @@ function valider() {
     gNbErrors = 0;
     gNbRejoues = 0;
     gNbMotsKo = 0;
+    parent.og.gIgnoreClick = true;
     setTimeout(auSuivant,1000);  // à cause de safari...
   }
 }

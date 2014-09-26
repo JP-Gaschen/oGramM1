@@ -22,8 +22,8 @@ var gAffTxt = [[]];
 var gSavedAffTxt = [[]];
 var sp = ["","s","p"];
 
-var gSuffixStyle = "position:absolute;font-size:18px;height:24px;line-height:18px;text-align:center;width:36px;background-color:#00ff00;";
-var gPrefixStyle = "position:absolute;font-size:18px;height:24px;line-height:18px;";
+var gSuffixStyle = "position:absolute;font-size:22px;height:31px;line-height:24px;text-align:center;width:36px;background-color:#00ff00;";
+var gPrefixStyle = "position:absolute;font-size:22px;height:31px;line-height:24px;";
 
 function cligne(obj,n,cmd) {
   gCligne = 0;
@@ -129,6 +129,7 @@ function animate1 (id,widthF,leftD,widthD,duration) {
   var animF = {};
   //animF["left"] = "" + left + "px";
   animF["width"] = "" + widthF + "px";
+  animF["height"] = "+=100px";
   ////console.log(anim['left']);
   //$("#"+id).each(function() {
   //  //console.log(this.innerHTML);
@@ -139,6 +140,8 @@ function animate1 (id,widthF,leftD,widthD,duration) {
   var animD = {};
   animD["left"] = "" + leftD + "px";
   animD["width"] = "" + (widthD) + "px";
+  animD["top"] = "-=100px";
+  animD["height"] = "+=100px";
 
   ////console.log(anim['left']);
   //$("#"+id).each(function() {
@@ -259,7 +262,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=46';
+      parent.og.location = 'menu.html?version=47';
       
     }
  
@@ -308,8 +311,8 @@ function auSuivant() {
       var nOk = nEx - gNbRate;
       parent.boutons.pageResultats(nOk, nEx);
       //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
-      if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=46";
-    else setTimeout(parent.boutons.showMenu,4000);
+      //if (parent.ba.serie == 8)parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=47";
+      //else setTimeout(parent.boutons.showMenu,4000);
   } else {
     //console.log("auSuivant 4");  // fin de phase 1
     if (parent.isDemo) {
@@ -344,7 +347,7 @@ function montreTxt1(m) {
   for (var i=0; i<t.length - 1; i++) {
     var topPos = 20*i + (serie-1) * 20;
     var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle;'><tr><td>" + t[i] + "</td></tr></table>";
-    newTxt += "<div><span style='line-height:20px;'>"  + tbl + "</span></div>";
+    newTxt += "<div><span style='line-height:24px;'>"  + tbl + "</span></div>";
     
     
   }
@@ -362,8 +365,8 @@ function montreTxt2(m) {
 
   for (var i=0; i<t.length - 1; i++) {
     var topPos = 20*i + (serie-1) * 20;
-    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle;font-size:34px;'><tr><td>" + t[i] + "</td></tr></table>";
-    newTxt += "<div><span style='line-height:20px;'>"  + tbl + "</span></div>";
+    var tbl = "<table  style='position:absolute;top:"+topPos+"px;vertical-align:middle;font-size:22px;'><tr><td>" + t[i] + "</td></tr></table>";
+    newTxt += "<div><span style='line-height:24px;'>"  + tbl + "</span></div>";
     
     
   }
@@ -387,7 +390,7 @@ function addSuffix(m,n) {
   var newTxt = "";
 
   for (var i=0; i<t.length - 1; i++) {
-    var topPos = 25*i;
+    var topPos = 2 + 33*i;
     if (suf == "") {
       pref = t[i];
       tSuf="&nbsp";
@@ -396,7 +399,7 @@ function addSuffix(m,n) {
       pref = t[i].substring(0,indSuf);
       tSuf = suf;
     }
-    var w=frames[m].txtSize2(pref,18);
+    var w=frames[m].txtSize2(pref,22);
     //console.log(w);
     var IdP = "Pref"+(i+1);
     var IdS = "Suff"+(i+1);
@@ -404,7 +407,7 @@ function addSuffix(m,n) {
 
     var txt2 = "<span Id='" + IdS + "' class='suffix' style='" + gSuffixStyle + "left:"+(w+3)+"px;'>" + tSuf + "</span>";
     
-    newTxt += "<div style='height:25px;position:absolute;top:"+topPos+"px;'>" + txt1 + txt2 + "</div>";
+    newTxt += "<div style='height:31px;position:absolute;top:"+topPos+"px;'>" + txt1 + txt2 + "</div>";
     
   }
   //newTxt +=  "</div>";
@@ -478,7 +481,7 @@ function collapse(m,n) {
   
   for (var i=0; i<t.length - 1 - n; i++) {
   
-    var tPos = 25*i;
+    var tPos = 2 + 33*i;
     Id = "Li"+(i+1);
 
     if (suf == "") {
@@ -489,7 +492,7 @@ function collapse(m,n) {
     //var zi = 10;  z-index:"+zi+"
     tbl = "<span  style='position:absolute;left:"+(gLeftPos)+"px;text-align:center;' class='suffix'>" + tSuf +"</span>";
     
-    newTxt += "<div Id='" + Id + "' style='position:absolute;height:25px;top:" + tPos + "px;'>" + tbl + "</div>";
+    newTxt += "<div Id='" + Id + "' style='position:absolute;height:31px;top:" + tPos + "px;'>" + tbl + "</div>";
     
   }
   
@@ -497,20 +500,20 @@ function collapse(m,n) {
   //console.log(Id);
   frames[m].document.getElementById('Sub').innerHTML = newTxt;
   $("span.suffix",frames[m].document).each(function(){
-    this.style.fontSize = '18px';
+    this.style.fontSize = '22px';
     this.style.width = '36px';
-    this.style.height = '24px';
-    this.style.lineHeight = '18px';
+    this.style.height = '31px';
+    this.style.lineHeight = '24px';
     this.style.backgroundColor = "#00ff00"; 
   });
   if (n < t.length -2) {
-    frames[m].animate1(Id,25,1000);
+    frames[m].animate1(Id,33,1000);
     setTimeout(function() {collapse(m,n+1);},gPhase2Delay);
   } else if (m == 1) {
-      var nEx = pc.corData.length - pc.nPhase1;
+      var nEx = pc.nPhase1;
       var nOk = nEx - gNbRate;
       parent.boutons.pageResultats(nOk, nEx);
-      setTimeout(parent.boutons.showMenu,4000);
+      //setTimeout(parent.boutons.showMenu,4000);
     
   }
   
@@ -523,7 +526,7 @@ function montreAbstractions0(m,n) {
   var newTxt = "<div class='abstractions' style='visibility:visible;margin-left:"+gLeftPos+"px; margin-right:auto;'>"
 
   for (var i=1; i <= n; i++) {
-    var tPos = 1 + (i-1)* 25;
+    var tPos = 1 + (i-1)* 33;
    //alert("i="+i + " " + t[i]);
    suf = spSuffix[i][m];
    if (suf == "") {suf="&nbsp"}
@@ -534,7 +537,7 @@ function montreAbstractions0(m,n) {
   }
 
   
-  var tPos = 1 + n * 25;
+  var tPos = 1 + n * 33;
   newTxt += "</div><div Id='Sub' style='position:absolute;top:"+tPos+"px;'></div>" ;
   //console.log(newTxt);
   gAbstractions0[m] = newTxt;
@@ -586,10 +589,10 @@ function process_click_global(w){
 
       var txt = txt5.split(" ")[j]; 
       //console.log( w.document.getElementById('Sp').innerHTML);
-      var tbl = "<span style='line-height:18px;font-size:18px;height:25px'>" + txt + "</span>";
-      //var newTxt = "<div><span style='line-height:20px;font-size:20px;'>"  + tbl + "</span></div>";
-       var newTxt = "<div style='height:25px;'>"  + tbl + "</div>";
-      //var newTxt = "<span style='line-height:16px;'>, "  + txt + "</span>";
+      var tbl = "<span unselectable='on' class='unselectable' style='line-height:24px;font-size:22px;height:31px'>" + txt + "</span>";
+      //var newTxt = "<div><span style='line-height:24px;font-size:22px;'>"  + tbl + "</span></div>";
+       var newTxt = "<div style='height:31px;'>"  + tbl + "</div>";
+      //var newTxt = "<span style='line-height:24px;'>, "  + txt + "</span>";
       //console.log(newTxt);
       if (gPhase==2) document.getElementById('phrase').innerHTML += txt + " ";
       //if (gPhase == 1) {

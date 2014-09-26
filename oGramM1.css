@@ -1,5 +1,16 @@
-body,td,th,p {
+body,div,td,th,p {
  font-family: "Comic Sans MS", sans-serif;
+}
+.unselectable {
+ user-select: none;
+   -moz-user-select: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -o-user-select: none;
+   -ms-user-select: none;
+   -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+    user-drag: none;
+
 }
 
 div.bordnoir {

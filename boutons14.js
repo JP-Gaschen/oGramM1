@@ -2,7 +2,10 @@
 function valider(n) {
   n = n || 0
 
-  if (gIgnoreClick && !parent.isDemo) {return;}
+  if (gIgnoreClick && !parent.isDemo) {
+    //console.log("ignore");
+    return;
+  }
   var pc = parent.corpus;
   var pcd = pc.corData;
  
@@ -34,7 +37,7 @@ function valider(n) {
     }
 
     gNbErrors = 0;
-    
+    parent.og.gIgnoreClick = true;
     setTimeout(auSuivant,200);  // à cause de safari...
   } else {
     gNbErrors += 1;

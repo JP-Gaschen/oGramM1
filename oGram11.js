@@ -98,7 +98,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
   } else {
     parent.ba.init();
-    parent.og.location = 'menu.html?version=46';
+    parent.og.location = 'menu.html?version=47';
     
   }
   $('body',frames['Resume2'].document).scrollTop(3000);
@@ -150,8 +150,8 @@ function auSuivant() {
         //alert("fini")};
         
         
-        if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=46";
-        else setTimeout(parent.boutons.showMenu,2000);
+        //if (parent.ba.serie == 4)  parent.og.location = "resumeFrame" + parent.ba.program+ parent.ba.activity + ".html?version=47";
+        //else setTimeout(parent.boutons.showMenu,2000);
     }
   } 
 }
@@ -207,7 +207,7 @@ function process_click_global(w){
       var leftPos = parseInt(w.document.getElementById('P1').style.paddingLeft);
       if (leftPos) leftPos += 6;
       else leftPos = 7;
-      var mot = "<div id='mot' style='position:absolute;font-size:24px;top:" + topPos + "px;left:" + leftPos + "px;line-height:28px;'>"  + txtMot + "</div>";
+      var mot = "<div unselectable='on' class='unselectable' id='mot' style='position:absolute;font-size:24px;top:" + topPos + "px;left:" + leftPos + "px;line-height:28px;'>"  + txtMot + "</div>";
       if (w.document.getElementById('Sp').innerHTML == '') w.document.getElementById('Sp').innerHTML = mot;
       else w.document.getElementById('mot').innerHTML += txtMot;
       //console.log(w.document.getElementById('mot').innerHTML);

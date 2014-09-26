@@ -57,7 +57,7 @@ div.box3 {
 div.box4 {
  position: absolute;
  top: 615px; left: 20px;
- height: 60px; width: 460px;
+ height: 80px; width: 460px;
  border-style : solid;
  border-width : 30px;
  border-color: #ff0000;
@@ -132,7 +132,7 @@ div.box9 {
 div.box10 {
  position: absolute;
  top: 615px; left: 490px;
- height: 60px; width: 235px;
+ height: 80px; width: 235px;
   border-style : solid;
  border-width : 30px;
  border-color: #000000;
@@ -142,7 +142,7 @@ div.box10 {
 div.box11 {
  position: absolute;
  top: 615px; left: 725px;
- height: 60px; width: 235px;
+ height: 80px; width: 235px;
  border-top : solid 30px #000000;
  border-left : solid 30px white;
  border-right : solid 30px #000000;
@@ -173,9 +173,9 @@ div.box13 {
 </style>
 
 <script type="text/javascript">
-var tops=[180,495,592,130,605,608,10,30,130,10,30,605,605,130,120];
+var tops=[190,505,602,140,615,618,20,40,140,20,40,615,615,140,130];
 var lefts=[20,20,60,210,20,60,20,477,490,490,493,490,725,20,100];
-var heights=[305,100,13,355,60,30,110,70,465,110,70,60,60,40,60];
+var heights=[305,100,13,355,80,30,110,70,465,110,70,80,80,40,60];
 var widths=[180,460,130,270,460,130,460,13,470,470,70,235,235,80,110];
 var top0 = [];
 var left0 = [];
@@ -209,7 +209,7 @@ function init() {
     $(this).css('height', nHeight.toString()+"px");
     $(this).css('width', nWidth.toString()+"px");
   });
-   gIntervalId = window.setInterval("grow()",15);
+   gIntervalId = window.setInterval("grow()",40);
 
 }
 function grow() {
@@ -231,7 +231,6 @@ function grow() {
       var phi =  phi0[index] + (1 - 2*(index%2)) * 3 * growIndex*Math.PI/100;
       var r = growIndex * rayon[index]/100.
       nTop = parseInt(cTop[index]-r*Math.sin(phi));
-      ////console.log("nTop " + nTop.toString());
    // if (index==1) {alert(nTop);}
       nLeft = parseInt(cLeft[index]+r*Math.cos(phi));
       nHeight = parseInt((growIndex*heights[index])/100);
@@ -248,8 +247,7 @@ function grow() {
 }
 function displayFrame() {
   prog= parent.ba.program;
-  act = parent.ba.activity;
-  parent.og.location = 'frame' + prog + act + '.html?version=46';
+  parent.og.location = 'frame' + prog.toString() + '.html?version=47';
 }
 </script>
 </head>

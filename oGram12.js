@@ -91,7 +91,7 @@ function init() {
      var mot = document.getElementById(id);
 
      var lefti = 50 + 220 * (i % 4);
-     var topi = 130 + 50 * parseInt(i/4);
+     var topi = 52 + 76 * parseInt(i/4);
      mot.style.left = "" + lefti+"px";
      mot.style.top = "" + topi+"px";
      mot.style.color = "#000000";
@@ -122,6 +122,7 @@ function init() {
   
   $(document).keydown(function (e) {
     var keyCode = e.keyCode || e.which;
+    //console.log('document which ' + e.which);
     if (keyCode == 13) {   // return
       parent.boutons.valider();
       return false;
@@ -147,11 +148,12 @@ function init() {
     //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
     $('#phrase').keydown(function (e) {
       var keyCode = e.keyCode || e.which;
-    
+    //console.log('phrase which ' + e.which + ' target ' + e.target.id);
       if (keyCode == 13) {   // return
         parent.boutons.valider();
         return false;
       }
+      e.stopPropagation();
     });
   }
 
@@ -182,6 +184,7 @@ function setCursor(node,pos){
 function selectMot(id,iMot,txt) {
   var pc = parent.corpus;
   var pcd = pc.corData;
+  if (!parent.boutons.document.getElementById('Bvalider').disabled) return;
   //console.log("selectMot " + iMot + ' ' + txt);
   var j = parent.ranData(iMot) + 1;
   var k = j;
@@ -215,7 +218,8 @@ function selectMot(id,iMot,txt) {
         document.getElementById(id).style.color = '#777777';
         
         
-       
+       parent.enableBouton('Bvalider','validerC.gif');
+
   
         setTimeout(efface,1200);
       } else {
@@ -231,7 +235,8 @@ function selectMot(id,iMot,txt) {
 
 
 function efface(){
-  parent.enableBouton('Bvalider','validerC.gif');
+  gIgnoreClick = false;
+  //parent.enableBouton('Bvalider','validerC.gif');
   if (Date.now() % 2) {
     motAttendu = document.getElementById('sp1').innerHTML;
     motReecrit = 'sp1';
@@ -258,7 +263,7 @@ function continuer() {
     if ($('.hidden',frames[0].document).length == 0) document.getElementById("Bcontinuer").innerHTML = 'Quitter';
     } else {
       parent.ba.init();
-      parent.og.location = 'menu.html?version=46';
+      parent.og.location = 'menu.html?version=47';
     }
  
   frames['Resume2'].window.scrollTo(0,3000); //window.scrollTo(0,3000); //
@@ -299,6 +304,7 @@ function auSuivant() {
       //console.log("auSuivant 4");  // fin de phase 1
       if (parent.isDemo) {
         hidePointer(); // test demo automatique
+        setTimeout(parent.boutons.showMenu,4000);
         
       } else {
         var nEx = 2*pc.corData.length;
@@ -306,7 +312,7 @@ function auSuivant() {
         parent.boutons.pageResultats(nOk, nEx);
         //alert(nOk.toString() + " exercices réussis du premier coup sur " + nEx.toString());
       }
-      setTimeout(parent.boutons.showMenu,4000);
+      //setTimeout(parent.boutons.showMenu,4000);
         
 
   } 
