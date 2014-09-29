@@ -231,17 +231,7 @@ function init() {
     }
   });
   $('#phrase').keyup(function (e) {
-    //var sp =  document.getElementById('nnn');
-    //if (sp) {
-    //  var left = gLeft + sp.offsetLeft;
-      //document.getElementById('Nouveau').style.color="#00ff00";
-      //document.getElementById('Nouveau').style.left = "" + left + "px";
-    //}
-    var currentPhrase = $("#phrase").text();
-    var len = parent.txtSize2(currentPhrase,30);
-    //console.log('current size ' + len);
-    if (len > 860) document.getElementById("phraseDiv").style.height='120px';
-    if (len < 861) document.getElementById("phraseDiv").style.height='70px';
+    //
   });
   
   if (parent.isDemo){
@@ -399,11 +389,6 @@ function move() {
     //console.log(gPhrase);
     //if (parent.isDemo) 
     document.getElementById('phrase').innerHTML = gPhrase;
-    var currentPhrase = $("#phrase").text();
-    var len = parent.txtSize2(currentPhrase,30);
-    //console.log('current size ' + len);
-    if (len > 860) document.getElementById("phraseDiv").style.height='120px';
-    if (len < 861) document.getElementById("phraseDiv").style.height='70px';
   }
 }
 

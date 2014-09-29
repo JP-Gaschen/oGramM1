@@ -110,13 +110,6 @@ function rediffusePhrase() {
   gIgnoreClick = false;
   
   document.getElementById('phrase').innerHTML=pcd[pc.iData][0];
-  var currentPhrase = $("#phrase").text();
-    
-  var len = parent.txtSize2(currentPhrase,30);
-  
-  //console.log('current size ' + len);
-  if (len > 858) document.getElementById("phraseDiv").style.height='120px';
-  else document.getElementById("phraseDiv").style.height='70px';
   
   
   var nbMots = pcd[pc.iData][0].split(' ').length;
