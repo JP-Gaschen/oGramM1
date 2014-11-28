@@ -137,6 +137,10 @@ var firstSound = true;
 // }
   
 $(document).ready( function () {
+  window.setTimeout(initMenu,200);
+});
+
+function initMenu () {
   var activity = parent.ba.activity;
   parent.ba.document.getElementById("Binformation").style.visibility = 'hidden';
   document.onclick = (function(e) {
@@ -171,8 +175,11 @@ $(document).ready( function () {
 
 
       //txt += "<a href='#'' id='m"+i+"' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none;border-style : solid; border-width : 1px; border-color: #000000; background-color : #00bb00;' onClick='page2("+i+")'>"+ activites[i][0]+ "</a>";
-      txt += "<a draggable='false' href='#' id='m"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; text-align:center; width:30px; padding-left:1px; height:50px;' onClick='page2("+i+")'>"+ i +  "</a>";
-      txt += "<a draggable='false' href='#' id='n"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; width:850px; left:30px; height:50px;' onClick='page2("+i+")'> - " + activites[i][0]+ "</a>";
+      //txt += "<a draggable='false' href='#' id='m"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; text-align:center; width:30px; padding-left:1px; height:50px;' onClick='page2("+i+")'>"+ i +  "</a>";
+      //txt += "<a draggable='false' href='#' id='n"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; width:850px; left:30px; height:50px;' onClick='page2("+i+")'> - " + activites[i][0]+ "</a>";
+      txt += "<a draggable='false' href='#' id='m"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; text-align:center; width:30px; padding-left:1px; height:50px;border-radius: 25px 0px 0px 25px;' onClick='page2("+i+")'>"+ i +  "</a>";
+      txt += "<a draggable='false' href='#' id='n"+i+"' class='bgC1' style='position:absolute; top:"+tPos+"px; color:#000000;text-decoration: none; width:850px; left:30px; height:50px;border-radius: 0px 25px 25px 0px;' onClick='page2("+i+")'> - " + activites[i][0]+ "</a>";
+
     }
     //console.log(txt);
     document.getElementById('zm').innerHTML = txt + "</div>";
@@ -185,7 +192,7 @@ $(document).ready( function () {
 
   //console.log("fin de menu on ready");
 
-} ) ;
+}
 
 //function menuClick(event) {
   //console.log("menu click level " + parent.boutons.menuLevel);
@@ -214,8 +221,9 @@ function page2(activity) {
   
   var txt = "<div class='bgC1 unselectable' style='position:absolute; left:20px; font-size:32px; width:940px'>";
   if (activites[activity][1]) {
-    txt += "<a href='#' class='bgC1 unselectable' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
-    //console.log(txt);
+    //txt += "<a href='#' class='bgC1 unselectable' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][1][0]+";'>"+series[activity][1][1]+"</a>";
+    txt += "<a href='#' class='bgC1 unselectable' style='text-decoration: none; position:absolute; left:380px; top:60px; font-size:32px; line-height:90px; width:180px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center;border-radius: 25px;' onClick='"+series[activity][1][0]+"'>"+series[activity][1][1]+"</a>";
+ //console.log(txt);
   }
   var tPos;
   var lPos;
@@ -225,36 +233,48 @@ function page2(activity) {
   if (activity < 7) {
     for (var i=1; i<=nSeries; i++)  {
       var k = i + activites[activity][1];
-      if (nSeries < 11){
+      if (nSeries < 9){
         tPos = 255;
-        lPos = (940 - nSeries*90)/2 + (i-1)*90;
+        lPos = (940 - nSeries*90 - (nSeries -1)* 10)/2 + (i-1)*100;
         txti = i.toString();
+      } else if (activity == 2 || activity == 4) {
+        txti = i.toString();
+        if (i <= nSeries/2) {
+          tPos = 205;
+          lPos = (940 - nSeries*45)/2 + (i-1)*100;
+        }else {
+          tPos = 305;
+          lPos = (940 - nSeries*45)/2 + (i-1 -nSeries/2)*100;
+        }
       } else {
         var grp = 1+parseInt((i-1) / 2);
         var typ = 1 + ((i-1) % 2);
         txti = grp.toString() + '-' + typ.toString();
         if (i <= nSeries/2) {
-          tPos = 210;
-          lPos = (940 - nSeries*45)/2 + (i-1)*90;
+          tPos = 205;
+          lPos = (940 - nSeries*45)/2 + (i-1)*100;
         }else {
-          tPos = 300;
-          lPos = (940 - nSeries*45)/2 + (i-1 -nSeries/2)*90;
+          tPos = 305;
+          lPos = (940 - nSeries*45)/2 + (i-1 -nSeries/2)*100;
         }
       }
-      txt += "<a class='bgC1' draggable='false' href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'><span class='unselectable'>"+txti+"</span></a>";
+      //txt += "<a class='bgC1' draggable='false' href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'><span class='unselectable'>"+txti+"</span></a>";
+      txt += "<a class='bgC1' draggable='false' href='#'  style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:90px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center;border-radius: 25px;' onClick='"+series[activity][k][0]+";'><span class='unselectable'>"+txti+"</span></a>";
     }
   } else {
     for (var i=1; i<=nSeries; i++)  {
       var k = i + activites[activity][1];
       tPos = 255;
       lPos = 170 + (i-1)*400;
-      txt += "<a draggable='false' href='#' class='bgC1' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    //txt += "<a draggable='false' href='#' class='bgC1' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+      txt += "<a draggable='false' href='#' class='bgC1' style='position:absolute; top:"+tPos+"px; left:"+lPos+"px; width:200px; height:90px; line-height:90px; color:#000000;text-decoration: none; border-style : solid; border-width : 1px; border-color: #000000; text-align: center;border-radius: 25px;' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
     }
   }
   
   if (activites[activity][3]) {
     var k = activites[activity][1] + activites[activity][2] + 1;
-    txt += "<a draggable='false' href='#' class='bgC1' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    //txt += "<a draggable='false' href='#' class='bgC1' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
+    txt += "<a draggable='false' href='#' class='bgC1' style='text-decoration: none; position:absolute; left:380px; top:450px; font-size:32px; width:180px; line-height:90px; color:#000000;border-style : solid; border-width : 1px; border-color: #000000; text-align: center;border-radius: 25px;' onClick='"+series[activity][k][0]+";'>"+series[activity][k][1]+"</a>";
     //console.log(txt);
   }
   txt += "</div>";
@@ -384,7 +404,7 @@ function init() {
 </head>
 <body >
 <div class = "bordnoir">
-<div class = "bordvert bgC1">
+<div class = "bordvert bgC1" style="border-radius: 25px;">
 
 <div id='verticalContainerG'>
 <div unselectable="on" class='unselectable' Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
@@ -397,13 +417,16 @@ function init() {
  <div unselectable="on" class='unselectable' Id ="titre" style="font-size:24px;  text-align:center;"></div>
 </div>
 
-<div unselectable="on" class = "zoneCentrale bgC2" id="zm"></div>
+<div>
+<img unselectable="on" src="fondM1c.gif" width="980px" height="600px" style="position:absolute;top:50px; left:50px;">
 
+<div unselectable="on" class = "zoneCentrale" style='opacity: 0.8;' id="zm"></div>
+</div>
 
 
 </div>
 </div>
-</div>
+
 </body>
 
 </html>

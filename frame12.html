@@ -20,30 +20,33 @@ table {
 
 div.textinput {
  position: absolute;
- top: 635px; left: 50px;
+ top: 655px; left: 50px;
  height: 40px; width: 980px;
  background-color: #00ff00;
  text-align:center;
  z-index: 3;}
 
-div.fondvert {
+
+ div.centre {
  position: absolute;
  top: 50px; left: 50px;
- height: 560px; width: 980px;
- background-color: #00bb00;
+ border-radius: 25px;
+ background-color: rgba(0,255,0,0.5);
  z-index: 2;}
  
 div.mots{
   position:absolute;
   left:0px;
   top:0px;
-  width:220px;
-  height:66px;
-  padding-top:10px;
+  width:205px;
+  height:40px;
+  line-height: 110%;
   font-size:32px;
-  background-color: #00ff00;
+  background-color: rgba(0,255,0,0.1);
   color:#000000;
   padding-left:10px;
+  padding-right:10px;
+  z-index: 3;
 
 }
 </style>
@@ -64,7 +67,7 @@ $(window).load(function(){
 <body unselectable='on'>
 
 <div class = "bordnoir">
-<div class = "bordvert bgC1">
+<div class = "bordvert bgC1" style="border-radius: 25px">
 <div id='verticalContainerG'>
 <div unselectable='on' class='unselectable' Id ="application" style="font-size:24px; vertical-align:middle; text-align:center; " >Orthographe grammaticale</div>
 </div>
@@ -75,8 +78,10 @@ $(window).load(function(){
  <div unselectable='on' class='unselectable' Id ="titre" style="font-size:24px;vertical-align:middle;text-align:center"></div>
 </div>
 
-<div class = "fondvert bgC2" id="bordBlanc">
 
+<div>
+<img unselectable="on" src="fondM1c.gif" width="980px" height="600px" style="position:absolute;top:50px; left:50px; border-radius: 25px;">
+<div class = "centre" id="bordBlanc">
 
 <div unselectable='on' Id="t01" class="mots bgC1 unselectable"></div>
 <div unselectable='on' Id="t02" class="mots bgC1 unselectable"></div>
@@ -104,11 +109,12 @@ $(window).load(function(){
 <div unselectable='on' Id="t24" class="mots bgC1 unselectable"></div>
 
 <img id="pointerimg" style="visibility:hidden;position:absolute;top:710px;left:500px;z-index:20;" SRC="fing5_nw.gif" />
+</div>
 
 </div>
 
-<div Id="phraseDiv" class="textinput bgC2" >
-  <span Id ="phrase" style="font-size:26px; vertical-align:center";></span>
+<div Id="phraseDiv" class="textinput bgC2" contenteditable = 'true'>
+  <span Id ="phrase" style="font-size:26px; vertical-align:center" contenteditable = 'false' ></span>
 </div>
 
 

@@ -548,7 +548,7 @@ function collapse(m,n) {
     frames[m+7].animate1(Id,34,2000);
     setTimeout(function() {collapse(m,n+1);},gPhase2Delay);
     } else if (m == 3) {
-      var nEx = pc.corData.length - pc.nPhase1;
+      var nEx = pc.nPhase1;
       var nOk = nEx - gNbRate;
       parent.boutons.pageResultats(nOk, nEx);
       //setTimeout(parent.boutons.showMenu,4000);

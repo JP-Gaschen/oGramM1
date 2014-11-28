@@ -93,8 +93,8 @@ function init() {
      //console.log(id);
      var mot = document.getElementById(id);
 
-     var lefti = 50 + 220 * (i % 4);
-     var topi = 52 + 76 * parseInt(i/4);
+     var lefti = 0 + 220 * (i % 4);
+     var topi = 0 + 76 * parseInt(i/4);
      mot.style.left = "" + lefti+"px";
      mot.style.top = "" + topi+"px";
      mot.style.color = "#000000";
@@ -131,6 +131,67 @@ function init() {
     }
   });
   
+  $('#phrase').keydown(function (e) {
+    var keyCode = e.which;
+    
+    //console.log('keyCode of keydown ' + keyCode + ' shift ' + e.shiftKey);
+    if (keyCode != 8 && keyCode != 13 && keyCode != 46 && keyCode !=  32 && keyCode != 37 && keyCode != 39) {
+      //console.log($("#phrase").text());
+      return true;
+    }
+    if (keyCode == 37 || keyCode == 39) {
+      //console.log("arrow");
+      //e.stopPropagation();
+      return true;
+    }
+    
+    if (keyCode == 32) {    // spaceBar
+      
+        //console.log("not inserting a space");
+        e.preventDefault();
+        return false;
+    }
+    
+    if (keyCode == 13) {   // return
+      parent.boutons.valider();
+      e.preventDefault();
+      return false;
+    }
+    return true;
+  });
+ 
+  $('#phrase').keypress(function (e) {
+    var keyCode = e.which;
+    //console.log('keyCode of keypress ' + keyCode + ' shift ' + e.shiftKey);
+    //console.log(e.charCode);
+    if (keyCode == 0 || keyCode == 8 || keyCode == 13) {
+      e.preventDefault;
+      return true;
+    }
+    var charStr = String.fromCharCode(keyCode);
+    //console.log(charStr);
+    if (/[a-zàâäéèêëîïôöùûü]/.test(charStr)) {
+      //console.log('a letter');
+      return true;
+    } else {
+      e.preventDefault();
+      return false;
+    }
+    
+  });
+  
+  $('#phrase').keyup(function (e) {
+    var el = document.getElementById(motReecrit);
+    var pos = el.innerHTML.indexOf('oe');
+    if (pos > -1) {
+      var newTxt = el.innerHTML.replace(/oe/,'œ');
+      el.innerHTML = newTxt;
+      $('#'+motReecrit).focus();
+      if(navigator.appName == 'Microsoft Internet Explorer') setCursor(motReecrit,pos);
+      else setCursor(motReecrit,pos+1);
+    }
+  });
+  
   
   if (parent.isDemo){
     parent.ba.hideCarres();
@@ -150,19 +211,60 @@ function init() {
     //for (var i=0; i<6; i++) {console.log(parent.gPhraseOrder[i]);}
     $('#phrase').keydown(function (e) {
       var keyCode = e.keyCode || e.which;
-    
+     
       if (keyCode == 13) {   // return
         parent.boutons.valider();
         return false;
       }
     });
+    
+
   }
 
   //diffusePhrase();
 
 }
+
+function setCursor(node,pos){
+    var node = (typeof node == "string" || 
+    node instanceof String) ? document.getElementById(node) : node;
+    
+        if(!node){
+            //console.log("no node");
+            return false;
+        }
+        var sel, rangeObj;
+        if (document.createRange) {
+            //console.log('setPos 1');
+            var textNode = node.firstChild;      // the text node inside the div
+            //console.log(textNode.data.length);
+            if (textNode.data.length > 1) {
+              rangeObj = document.createRange ();
+                        // aligns the range to the second character
+              rangeObj.setStart (textNode, pos);
+              rangeObj.setEnd (textNode, pos);
+                        // deletes the character
+                    //rangeObj.deleteContents ();
+              sel = window.getSelection();
+
+              rangeObj.collapse(true);
+              sel.removeAllRanges();
+              sel.addRange(rangeObj);
+            }
+
+        } else {
+            //console.log('setPos 2');
+        }
+
+    }
+
+
+
 function selectMot(id,iMot,txt) {
-  if (!parent.boutons.document.getElementById('Bvalider').disabled) return;
+  if (!parent.boutons.document.getElementById('Bvalider').disabled) {
+    document.getElementById(motReecrit).focus();
+    return;
+  }
   var pc = parent.corpus;
   var pcd = pc.corData;
   //console.log("selectMot " + iMot + ' ' + txt);
@@ -200,7 +302,7 @@ function selectMot(id,iMot,txt) {
         document.getElementById(id).style.color = '#777777';
         parent.enableBouton('Bvalider','validerC.gif');
   
-        setTimeout(efface,1200);
+        setTimeout(efface,2200);
       } else {
         //console.log("mauvais 2e mot");
         gSelErrors += 1;

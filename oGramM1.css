@@ -12,6 +12,9 @@ body,div,td,th,p {
     user-drag: none;
 
 }
+div {
+  box-sizing: border-box;
+}
 
 div.bordnoir {
  position: absolute;

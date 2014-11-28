@@ -125,85 +125,38 @@ function init() {
   //document.getElementById("Nouveau").style.backgroundColor=parent.bgC1;
   //document.getElementById("Ancien").style.backgroundColor=parent.bgC2;
   
-// if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ) {
-
-  $('#phrase').keypress(function (e) {
-    var keyCode = e.which;
-    //console.log('keyCode of keypress ' + keyCode + ' shift ' + e.shiftKey);
-    //console.log(e.charCode);
-    if (keyCode == 0 || keyCode == 8 || keyCode == 13) {
-      e.preventDefault;
-      return true;
-    }
-    
-    var el = document.getElementById("phrase");
-    //console.log(el.innerHTML);
-    var range = window.getSelection().getRangeAt(0);
-    var pos = getCharacterOffsetWithin(range, el);
-    
-    currentPhrase = $("#phrase").text();
-    var char1 = currentPhrase.charAt(pos-1);
-    var char0 = currentPhrase.charAt(pos);
-    //console.log(pos + ' /' + char0 + '/' + char1);
-    if (char0 == ',') {
-      //console.log("not inserting before coma");
-      e.preventDefault();
-      return false;
-    }
-    if (char1 == ',') {
-      //console.log("not inserting after coma");
-      e.preventDefault();
-      return false;
-    }
-    var charStr = String.fromCharCode(keyCode);
-    //console.log(charStr);
-    if (/[a-zàâäéèêëîïôöùûü]/.test(charStr)) {
-      //console.log('a letter');
-      return true;
-    } else {
-      e.preventDefault();
-      return false;
-    }
-    
-  });
- 
+  
   $('#phrase').keydown(function (e) {
     var keyCode = e.which;
+    //console.log('keyCode down ' + keyCode + ' shift ' + e.shiftKey);
+    //console.log( $(this).getCursorPosition());
+
+    var charStr = String.fromCharCode(keyCode);
     
-    //console.log('keyCode of keydown ' + keyCode + ' shift ' + e.shiftKey);
-    if (keyCode != 8 && keyCode != 13 && keyCode != 46 && keyCode !=  32 && keyCode != 37 && keyCode != 39) {
-      //console.log($("#phrase").text());
-      return true;
-    }
-    if (keyCode == 37 || keyCode == 39) {
-      //console.log("arrow");
-      //e.stopPropagation();
-      return true;
-    }
+    
+    
+
     var el = document.getElementById("phrase");
     //console.log(el.innerHTML);
     var range = window.getSelection().getRangeAt(0);
     var pos = getCharacterOffsetWithin(range, el);
     //console.log('pos ' + pos);
-    
+    var outerLen = document.getElementById('nnn').outerHTML.length;
+    var innerLen = document.getElementById('nnn').innerHTML.length;
+    //console.log("spanlen " + innerLen + " " + outerLen);
+    if (pos >  document.getElementById('phrase').innerHTML.indexOf('<span')) {
+      //pos += outerLen - innerLen;
+    }
     //var currentPhrase = document.getElementById("phrase").innerHTML;
     currentPhrase = $("#phrase").text();
     //console.log(currentPhrase);
-    
     var nouvLen = pcd[pc.iData][1].length;
-    //console.log(nouvLen + ' /'+ currentPhrase.substring(pos-nouvLen,pos) + '/');
-    //console.log(nouvLen + ' /'+ currentPhrase.substring(pos,pos+nouvLen) + '/');
     if (currentPhrase.substring(pos-nouvLen,pos) == pcd[pc.iData][1] && keyCode == 8 ) {
       //console.log("not deleting nouveau");
       e.preventDefault();
       return false;
     }
-    if (currentPhrase.substring(pos,pos+nouvLen) == pcd[pc.iData][1] && keyCode == 46 ) {
-      //console.log("not deleting nouveau");
-      e.preventDefault();
-      return false;
-    }
-
+     
     var c2 = currentPhrase.charCodeAt(pos-2);
     var c1 = currentPhrase.charCodeAt(pos-1);
     var c0 = currentPhrase.charCodeAt(pos);
@@ -211,10 +164,10 @@ function init() {
     var char1 = currentPhrase.charAt(pos-1);
     var char0 = currentPhrase.charAt(pos);
     
-    
     //console.log(pos + " c0 " + c0 + " " + char0 + "   c1 " + c1 + " " + char1 + "   c2 " +  c2 + " " + char2);
 
     // backSpace 8 or delete 46
+    // 38 est le code pour &
     if ((keyCode == 8 && (c1 == 32 || c1 == 160)) || (keyCode == 46 && (c0 == 32 || c0 == 160))) {
       //console.log("not deleting a space");
       e.preventDefault();
@@ -225,23 +178,32 @@ function init() {
       e.preventDefault();
       return false;
     }
-    if (keyCode == 32) {    // spaceBar
-      
-        //console.log("not inserting a space");
-        e.preventDefault();
-        return false;
-    }
-    
-    if (keyCode == 13) {   // return
-      parent.boutons.valider();
+    if (keyCode == 54) {
+      //console.log("not inserting a &");
       e.preventDefault();
       return false;
     }
-    return true;
+    if (keyCode == 32) {    // spaceBar
+      //console.log("space");
+      //console.log("space " + $('#phrase').text());
+      var phraseTxt = $('#phrase').text().replace(/\s /g, " ? ").replace(/\s/g, " ");
+      var mots =phraseTxt.split(' ');
+      //for (var i=0; i<mots.length; i++)//console.log(mots[i]);
+      //var mots =$('#phrase').text().replace(/\s+/g, " ").split(' ');
+      var justesPoint = pcd[pc.iData+1][0].replace(/'/,"' ").replace(/-/,"- ");
+      var justes = justesPoint.split(' ');
+      var nbMots = compteMots($('#phrase').text());
+      //console.log(nbMots + " " + mots.length + " ?? " + justes.length);
+      if (mots.length >= justes.length) {
+        e.preventDefault();
+        return false;
+      }
+    }
+    if (keyCode == 13) {   // return
+      parent.boutons.valider();
+      return false;
+    }
   });
- 
-  
-
   $(document).keydown(function (e) {
     var keyCode = e.keyCode || e.which;
 
@@ -255,10 +217,16 @@ function init() {
     }
   });
   $('#phrase').keyup(function (e) {
-    //var keyCode = e.keyCode || e.which;
-    //console.log("keyup " + keyCode + " " +String.fromCharCode(keyCode));
+    var keyCode = e.keyCode || e.which;
+    console.log(document.getElementById('phrase').innerHTML);
+    e.preventDefault();
+    return false;
   });
- 
+   $('#phrase').keypress(function (e) {
+    var keyCode = e.keyCode || e.which;
+    console.log(String.fromCharCode(keyCode));
+  });
+  
   if (parent.isDemo){
     parent.ba.hideCarres();
     parent.enableBouton('displayMenu','menuC.gif');

@@ -20,7 +20,9 @@ var gTxt;
 
 var selectedSingulier = 0;
 var motAttendu;
+var mots = [];
 var motReecrit;
+var needFocus=false;
 
 
 function cligne(obj,n,cmd) {
@@ -91,7 +93,7 @@ function init() {
      var mot = document.getElementById(id);
 
      var lefti = 50 + 220 * (i % 4);
-     var topi = 52 + 76 * parseInt(i/4);
+     var topi = 90 + 76 * parseInt(i/4);  // 52
      mot.style.left = "" + lefti+"px";
      mot.style.top = "" + topi+"px";
      mot.style.color = "#000000";
@@ -128,8 +130,68 @@ function init() {
       return false;
     }
   });
+  $('#phrase').keydown(function (e) {
+    var keyCode = e.which;
+    
+    //console.log('keyCode of keydown ' + keyCode + ' shift ' + e.shiftKey);
+    if (keyCode != 8 && keyCode != 13 && keyCode != 46 && keyCode !=  32 && keyCode != 37 && keyCode != 39) {
+      //console.log($("#phrase").text());
+      return true;
+    }
+    if (keyCode == 37 || keyCode == 39) {
+      //console.log("arrow");
+      //e.stopPropagation();
+      return true;
+    }
+    
+    if (keyCode == 32) {    // spaceBar
+      
+        //console.log("not inserting a space");
+        e.preventDefault();
+        return false;
+    }
+    
+    if (keyCode == 13) {   // return
+      parent.boutons.valider();
+      e.preventDefault();
+      return false;
+    }
+    return true;
+  });
+ 
+  $('#phrase').keypress(function (e) {
+    var keyCode = e.which;
+    //console.log('keyCode of keypress ' + keyCode + ' shift ' + e.shiftKey);
+    //console.log(e.charCode);
+    if (keyCode == 0 || keyCode == 8 || keyCode == 13) {
+      e.preventDefault;
+      return true;
+    }
+    var charStr = String.fromCharCode(keyCode);
+    //console.log(charStr);
+    if (/[a-zàâäéèêëîïôöùûü]/.test(charStr)) {
+      //console.log('a letter');
+      return true;
+    } else {
+      e.preventDefault();
+      return false;
+    }
+    
+  });
   
+  $('#phrase').keyup(function (e) {
+    var el = document.getElementById(motReecrit);
+    var pos = el.innerHTML.indexOf('oe');
+    if (pos > -1) {
+      var newTxt = el.innerHTML.replace(/oe/,'œ');
+      el.innerHTML = newTxt;
+      $('#'+motReecrit).focus();
+      if(navigator.appName == 'Microsoft Internet Explorer') setCursor(motReecrit,pos);
+      else setCursor(motReecrit,pos+1);
+    }
+  });
   
+
   if (parent.isDemo){
     parent.ba.hideCarres();
     parent.enableBouton('displayMenu','menuC.gif');
@@ -161,36 +223,56 @@ function init() {
 
 }
 
-//SET CURSOR POSITION
+
+
 function setCursor(node,pos){
     var node = (typeof node == "string" || 
     node instanceof String) ? document.getElementById(node) : node;
+    
         if(!node){
+            //console.log("no node");
             return false;
-        }else if(node.createTextRange){
-            var textRange = node.createTextRange();
-            textRange.collapse(true);
-            textRange.moveEnd(pos);
-            textRange.moveStart(pos);
-            textRange.select();
-            return true;
-        }else if(node.setSelectionRange){
-            node.setSelectionRange(pos,pos);
-            return true;
         }
-        return false;
+        var sel, rangeObj;
+        if (document.createRange) {
+            //console.log('setPos 1');
+            var textNode = node.firstChild;      // the text node inside the div
+            //console.log(textNode.data.length);
+            if (textNode.data.length > 1) {
+              rangeObj = document.createRange ();
+                        // aligns the range to the second character
+              rangeObj.setStart (textNode, pos);
+              rangeObj.setEnd (textNode, pos);
+                        // deletes the character
+                    //rangeObj.deleteContents ();
+              sel = window.getSelection();
+
+              rangeObj.collapse(true);
+              sel.removeAllRanges();
+              sel.addRange(rangeObj);
+            }
+
+        } else {
+            //console.log('setPos 2');
+        }
+
     }
+
 
 function selectMot(id,iMot,txt) {
   var pc = parent.corpus;
   var pcd = pc.corData;
-  if (!parent.boutons.document.getElementById('Bvalider').disabled) return;
+  if (!parent.boutons.document.getElementById('Bvalider').disabled) {
+    //console.log("set focus in selectMot");
+    document.getElementById(motReecrit).focus();
+    return;
+  }
   //console.log("selectMot " + iMot + ' ' + txt);
   var j = parent.ranData(iMot) + 1;
   var k = j;
   if (j > 12) k = j-12;
   //console.log(pcd[k-1][0]);
-  var mots = pcd[k-1][0].split(' ');
+  mots = pcd[k-1][0].split(' ');
   //console.log(document.getElementById(id).style.color);
   if (document.getElementById(id).style.color == 'rgb(0, 0, 0)') {
     if (selectedSingulier == 0) {
@@ -240,19 +322,16 @@ function efface(){
   if (Date.now() % 2) {
     motAttendu = document.getElementById('sp1').innerHTML;
     motReecrit = 'sp1';
-    
     document.getElementById('sp1').contentEditable = true;
     document.getElementById('sp1').focus();
     document.getElementById('sp1').innerHTML = '&nbsp;';
   } else {
     motAttendu = document.getElementById('sp4').innerHTML;
     motReecrit = 'sp4';
-    
     document.getElementById('sp4').contentEditable = true;
     document.getElementById('sp4').focus();
     document.getElementById('sp4').innerHTML = '&nbsp;';
   }
-  
 }
 
 

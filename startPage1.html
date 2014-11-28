@@ -203,8 +203,11 @@ function init() {
     //alert(rayon[index]);
     cTop[index] = (tops[index] + top0[index])/2;
     cLeft[index] = (lefts[index] + left0[index])/2;
-    var sin0 =  -(top0[index] - cTop[index])/rayon[index];
-    phi0[index] = Math.asin(sin0);
+    var sin0 =  (top0[index] - cTop[index])/rayon[index];
+    var cos0 =  (left0[index] - cLeft[index])/rayon[index];
+    phi0[index] = Math.atan(sin0/cos0);
+    if (cos0 > 0 ) phi0[index] += Math.PI;
+    
     //alert(phi0[index]);
     var nHeight = parseInt(index);
     var nWidth =  parseInt(index);
@@ -243,6 +246,12 @@ function grow() {
       nWidth = parseInt((growIndex*widths[index])/100);
       nBW = parseInt(50 + growIndex*(bw-50)/100);
     }
+    if (nTop < 10) nTop = 10;
+    if (nLeft < 10) nLeft = 10;
+
+    if (nTop + nHeight> 590) nTop = 590 - nHeight;
+    if (nLeft + nWidth > 970) nLeft = 970 - nWidth;
+    
     $(this).css('top', nTop.toString()+"px");
     $(this).css('left', nLeft.toString()+"px");
     $(this).css('height', nHeight.toString()+"px");
@@ -262,7 +271,7 @@ function displayFrame() {
 <body unselectable='on' class='unselectable' onLoad="javascript:init();">
 
 <div class = "bordnoir">
-<div class = "bordvert bgC1">
+<div class = "bordvert bgC1" style="border-radius: 25px;">
 <div class = "bordblanc">
 
 
